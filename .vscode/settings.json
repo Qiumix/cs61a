@@ -49,5 +49,6 @@
         "xmemory": "cpp",
         "xtr1common": "cpp",
         "xutility": "cpp"
-    }
+    },
+    "C_Cpp.default.compilerPath": "D:/Applications/Scoop/apps/gcc/current/bin/g++.exe"
 }

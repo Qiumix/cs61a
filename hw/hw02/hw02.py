@@ -23,10 +23,9 @@ def num_eights(x):
     True
     """
     "*** YOUR CODE HERE ***"
-    if not n:
+    if not x:
         return 0
-    t = 1 if x % 10 == 8 else 0
-    return t + nun_eights(x // 10)
+    return 1 if x % 10 == 8 else 0 + num_eights(x // 10)
 
 def pingpong(n):
     """Return the nth element of the ping-pong sequence.
@@ -61,19 +60,20 @@ def pingpong(n):
     True
     """
     "*** YOUR CODE HERE ***"
-    def in(t):
-        if t == 1:
-            return 1
-        return -1
-    if n == 1:
-        return 1
-    t = 1
-    for i in range(1, n + 1):
-        if not (i % 8) or num_eights(i):
-            t = 1 - t
-        return in(t) + pingpong(n - 1)
-    
-
+    def have_e(x):
+        if x == 0:
+            return False
+        if x % 10 == 8:
+            return True
+        return have_e(x // 10)
+    def helper(inc, index, count):
+        if index != n:
+            if have_e(index) or index % 8 == 0:
+                return helper(-inc, index + 1, count - inc)
+            return helper(inc, index + 1, count + inc)
+        return count
+    return helper(1, 1, 1)
+pingpong(8)
 def missing_digits(n):
     """Given a number a that is in sorted, increasing order,
     return the number of missing digits in n. A missing digit is
@@ -102,6 +102,14 @@ def missing_digits(n):
     True
     """
     "*** YOUR CODE HERE ***"
+    if n < 10:
+        return 0
+    l, ll = n % 10, n // 10 % 10
+    if l == ll:
+        t = 0
+    else:
+        t = l - ll - 1
+    return t + missing_digits(n // 10)
 
 
 def next_largest_coin(coin):
@@ -138,7 +146,15 @@ def count_coins(total):
     True
     """
     "*** YOUR CODE HERE ***"
-
+    def helper(current, remain):
+        if remain < 0:
+            return 0
+        elif remain == 0:
+            return 1
+        if current < 25:
+            return helper(current, remain - current) + helper(next_largest_coin(current), remain)
+        return helper(current, remain - current)
+    return helper(1, total)
 
 from operator import sub, mul
 
@@ -152,5 +168,4 @@ def make_anonymous_factorial():
     >>> check(HW_SOURCE_FILE, 'make_anonymous_factorial', ['Assign', 'AugAssign', 'FunctionDef', 'Recursion'])
     True
     """
-    return 'YOUR_EXPRESSION_HERE'
-
+    return lambda n: (lambda f, x: f(f, x))(lambda f, x: 1 if x == 0 else x * f(f, x - 1), n)

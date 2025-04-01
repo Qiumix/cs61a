@@ -3,7 +3,7 @@
         {
             "type": "cppbuild",
             "label": "C/C++: g++.exe build active file",
-            "command": "D:\\software\\Project\\cpeditor\\mingw64\\bin\\g++.exe",
+            "command": "D:/Applications/Scoop/apps/gcc/current/bin/g++.exe",
             "args": [
                 "-fdiagnostics-color=always",
                 "-g",

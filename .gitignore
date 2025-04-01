@@ -1,5 +1,38 @@
-**/myenv/
-**/*.pyc
-**/.venv
-**/__pycache
-**/myenv
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# Virtual environments
+venv/
+env/
+ENV/
+.env/
+
+# IDE specific files
+.idea/
+.vscode/
+*.swp
+*.swo
+myenv/
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Testing
+.coverage
+htmlcov/
+
+# CS61A specific
+.ok_storage
+.ok_history
+
+# Local configuration
+.DS_Store
