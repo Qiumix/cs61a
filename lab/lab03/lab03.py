@@ -109,6 +109,14 @@ def apply_twice(func):
         return func(func(x))
     return inner
 
+
+def is_prime(x):
+    for i in range(2, x):
+        if x % i == 0:
+            return False
+    return True
+
+
 def div_by_primes_under(n):
     """
     >>> div_by_primes_under(10)(11)
@@ -121,12 +129,12 @@ def div_by_primes_under(n):
     False
     """
     checker = lambda x: False
-    i = ____________________________
-    while ____________________________:
+    i = 2
+    while i <= n:
         if not checker(i):
-            checker = ____________________________
-        i = ____________________________
-    return ____________________________
+            checker = (lambda f, i: lambda x: f(i + 1)(x))(checker, i)
+        i = i + 1
+    return checker
 
 
 def div_by_primes_under_no_lambda(n):
