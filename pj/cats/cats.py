@@ -17,6 +17,11 @@ def choose(paragraphs, select, k):
     """
     # BEGIN PROBLEM 1
     "*** YOUR CODE HERE ***"
+    if k >= len(paragraphs):
+        return ""
+    t_str = paragraghs[k]
+    if select[t_str]:
+        return t_str
     # END PROBLEM 1
 
 
@@ -33,6 +38,7 @@ def about(topic):
     assert all([lower(x) == x for x in topic]), 'topics should be lowercase.'
     # BEGIN PROBLEM 2
     "*** YOUR CODE HERE ***"
+    return lambda x :()
     # END PROBLEM 2
 
 
