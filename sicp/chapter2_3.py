@@ -74,3 +74,24 @@ def min_c(area):
     """
     hs = devisors(area)
     return min([get_c(get_w(area, h), h) for h in hs])
+
+
+def apply_to_all(map_fn, s):
+    return [map_fn(x) for x in s]
+
+
+def keep_if(filter_fn, s):
+    return [x for x in s if filter_fn(x)]
+
+
+def reduce(reduce_fn, s, initial):
+    """
+    >>> reduce(mul, [2, 4, 8], 1)
+    64
+    """
+    reduced = initial
+    for x in s:
+        reduced = reduce_fn(reduced, x)
+    return reduced
+
+
