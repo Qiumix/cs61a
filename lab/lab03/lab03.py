@@ -8,6 +8,8 @@ triple = lambda x: 3 * x
 
 increment = lambda x: x + 1
 from ucb import trace
+
+
 def ordered_digits(x):
     """Return True if the (base 10) digits of X>0 are in non-decreasing
     order, and False otherwise.
@@ -65,7 +67,8 @@ def get_k_run_starter(n, k):
     return final
 
 
-def make_repeater(func, n):# n is the times that the func has been implemented
+def make_repeater(func,
+                  n):  # n is the times that the func has been implemented
     """Return the function that computes the nth application of func.
     
     >>> add_three = make_repeater(increment, 3)
@@ -81,20 +84,27 @@ def make_repeater(func, n):# n is the times that the func has been implemented
     5
     """
     "*** YOUR CODE HERE ***"
+
     def inner(x):
+
         def innerer(n):
             if n == 0:
                 return x
             return func(innerer(n - 1))
+
         return innerer(n)
+
     return inner
 
 
 def composer(func1, func2):
     """Return a function f, such that f(x) = func1(func2(x))."""
+
     def f(x):
         return func1(func2(x))
+
     return f
+
 
 def apply_twice(func):
     """ Return a function that applies func twice.
@@ -105,8 +115,10 @@ def apply_twice(func):
     16
     """
     "*** YOUR CODE HERE ***"
+
     def inner(x):
         return func(func(x))
+
     return inner
 
 
@@ -129,12 +141,23 @@ def div_by_primes_under(n):
     False
     """
     checker = lambda x: False
-    i = 2
-    while i <= n:
+    i = 2  # Start checking from the first prime number
+    while i < n:
         if not checker(i):
-            checker = (lambda f, i: lambda x: f(i + 1)(x))(checker, i)
-        i = i + 1
+            checker = (lambda f, i: lambda x: x % i == 0 or f(x))(checker, i)
+        i += 1
     return checker
+
+
+def div_not_lambda(n):
+
+    def inner(m):
+        for i in range(2, m + 1):
+            if n % i:
+                return False
+        return True
+
+    return inner
 
 
 def div_by_primes_under_no_lambda(n):
@@ -148,15 +171,22 @@ def div_by_primes_under_no_lambda(n):
     >>> div_by_primes_under_no_lambda(5)(1)
     False
     """
+
     def checker(x):
         return False
-    i = ____________________________
-    while ____________________________:
+
+    i = 2
+    while i < n:
         if not checker(i):
-            def outer(____________________________):
-                def inner(____________________________):
-                    return ____________________________
-                return ____________________________
-            checker = ____________________________
-        i = ____________________________
-    return ____________________________
+
+            def outer(f, i):
+
+                def inner(x):
+
+                    return x % i or f(i)
+
+                return inner
+
+            checker = outer
+        i = i + 1
+    return checker
