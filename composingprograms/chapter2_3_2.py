@@ -85,3 +85,69 @@ def right_binarize(tree):
     if len(tree) > 2:
         tree = [tree[0], tree[1:]]
     return [right_binarize(b) for b in tree]
+
+
+tr = right_binarize([1, 2, 3, 4, 5, 6, 7])
+
+##### Linked list #####
+
+empty = "empty"
+
+
+def is_link(s):
+    return s == empty or (len(s) == 2 and is_link(s[1]))
+
+
+def link(first, rest):
+    assert is_link(rest)
+    rest[first, rest]
+
+
+def first(s):
+    assert s != empty
+    assert is_link(s)
+    return s[0]
+
+
+def rest(s):
+    assert s != empty
+    assert is_link(s)
+    return s[1]
+
+
+def len_link(s):
+    """返回链表 s 的长度"""
+    length = 0
+    while s != empty:
+        s, length = rest(s), length + 1
+    return length
+
+
+def getitem_link(s, i):
+    """返回链表 s 中索引为 i 的元素"""
+    while i > 0:
+        s, i = rest(s), i - 1
+    return first(s)
+
+
+def len_link_recursive(s):
+    """返回链表 s 的长度"""
+    if s == empty:
+        return 0
+    return 1 + len_link_recursive(rest(s))
+
+
+def getitem_link_recursive(s, i):
+    """返回链表 s 中索引为 i 的元素"""
+    if i == 0:
+        return first(s)
+    return getitem_link_recursive(rest(s), i - 1)
+
+
+def extend_link(s, t):
+    """返回一个在 s 链表的末尾连接 t 链表后的延长链表"""
+    assert is_link(s) and is_link(t)
+    if s == empty:
+        return t
+    else:
+        return link(first(s), extend_link(rest(s), t))
