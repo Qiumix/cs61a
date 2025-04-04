@@ -24,7 +24,7 @@ def roll_dice(num_rolls, dice=six_sided):
     # BEGIN PROBLEM 1
     sum_num = 0
     is_Pig_Out = False
-    for i in num_rolls:
+    for i in range(num_rolls):
         temp_num = dice()
         if temp_num == 1:
             is_Pig_Out = True
@@ -45,7 +45,7 @@ def free_bacon(score):
 
     # Trim pi to only (score + 1) digit(s)
     # BEGIN PROBLEM 2
-    pi = pi // (10 ** (100 - score))
+    pi = pi // (10**(100 - score))
     # END PROBLEM 2
 
     return pi % 10 + 3
@@ -73,8 +73,8 @@ def take_turn(num_rolls, opponent_score, dice=six_sided):
 
 def extra_turn(player_score, opponent_score):
     """Return whether the player gets an extra turn."""
-    return (pig_pass(player_score, opponent_score) or
-            swine_align(player_score, opponent_score))
+    return (pig_pass(player_score, opponent_score)
+            or swine_align(player_score, opponent_score))
 
 
 def swine_align(player_score, opponent_score):
@@ -92,13 +92,14 @@ def swine_align(player_score, opponent_score):
     if player_score <= 0 or opponent_score <= 0:
         return False
     if player_score < opponent_score:
-        player_score , opponent_score = opponent_score, player_score
+        player_score, opponent_score = opponent_score, player_score
     while opponent_score != 0:
         player_score, opponent_score = opponent_score, player_score % opponent_score
     if player_score >= 10:
         return True
     return False
     # END PROBLEM 4a
+
 
 def pig_pass(player_score, opponent_score):
     """Return whether the player gets an extra turn due to Pig Pass.
@@ -119,8 +120,8 @@ def pig_pass(player_score, opponent_score):
     """
     # BEGIN PROBLEM 4b
     if player_score < opponent_score and opponent_score - player_score < 3:
-        return False
-    return True
+        return True
+    return False
     # END PROBLEM 4b
 
 
@@ -140,8 +141,13 @@ def silence(score0, score1):
     return silence
 
 
-def play(strategy0, strategy1, score0=0, score1=0, dice=six_sided,
-         goal=GOAL_SCORE, say=silence):
+def play(strategy0,
+         strategy1,
+         score0=0,
+         score1=0,
+         dice=six_sided,
+         goal=GOAL_SCORE,
+         say=silence):
     """Simulate a game and return the final scores of both players, with Player
     0's score first, and Player 1's score second.
 
@@ -161,32 +167,25 @@ def play(strategy0, strategy1, score0=0, score1=0, dice=six_sided,
     # BEGIN PROBLEM 5
     while True:
         if who == 0:
-            score0 += take_turn(strategy0(score0, score1), score1,dice)
-            say_scores(score0, score1)
-            if score0 >= goal:
-                break
-            while extra_turn(score0, score1):
-                score0 += take_turn(strategy0(score0, score1), score1,dice)
-                say_scores(score0, score1)
+            i = 0
+            while i == 0 or extra_turn(score0, score1):
+                score0 += take_turn(strategy0(score0, score1), score1, dice)
                 if score0 >= goal:
-                    break    
+                    return score0, score1
+                i += 1
             who = other(who)
     # END PROBLEM 5
     # (note that the indentation for the problem 6 prompt (***YOUR CODE HERE***) might be misleading)
     # BEGIN PROBLEM 6
         else:
-            score1 += take_turn(strategy1(score1, score0), score0,dice)
-            say_scores(score0, score1)
-            if score1 >= goal:
-                break
-            while extra_turn(score0, score1):
-                score0 += take_turn(strategy0(score1, score0), score0,dice)
-                say_scores(score1, score0)
+            i = 0
+            while i == 0 or extra_turn(score1, score0):
+                score1 += take_turn(strategy1(score1, score0), score0, dice)
                 if score1 >= goal:
-                    break    
+                    return score0, score1
+                i += 1
             who = other(who)
     # END PROBLEM 6
-    return score0, score1
 
 
 #######################
@@ -213,6 +212,7 @@ def announce_lead_changes(last_leader=None):
     >>> f5 = f4(15, 13)
     Player 0 takes the lead by 2
     """
+
     def say(score0, score1):
         if score0 > score1:
             leader = 0
@@ -223,6 +223,7 @@ def announce_lead_changes(last_leader=None):
         if leader != None and leader != last_leader:
             print('Player', leader, 'takes the lead by', abs(score0 - score1))
         return announce_lead_changes(leader)
+
     return say
 
 
@@ -242,8 +243,10 @@ def both(f, g):
     Player 0 now has 10 and Player 1 now has 17
     Player 1 takes the lead by 7
     """
+
     def say(score0, score1):
         return both(f(score0, score1), g(score0, score1))
+
     return say
 
 
@@ -269,20 +272,22 @@ def announce_highest(who, last_score=0, running_high=0):
     assert who == 0 or who == 1, 'The who argument should indicate a player.'
     # BEGIN PROBLEM 7
     "*** YOUR CODE HERE ***"
-    def say(score0, score1):    
+
+    def say(score0, score1):
         if who == 0:
             inc_cur = score0 - last_score
             if inc_cur > running_high:
                 running_high = inc_cur
                 print(running_high, " point(s)! The most yet for Player 0")
-            return announce_highest(who, score0, running_high)       
+            return announce_highest(who, score0, running_high)
         else:
             inc_cur = score1 - last_score
             if inc_cur > running_high:
                 running_high = inc_cur
                 print(running_high, " point(s)! The most yet for Player 1")
             return announce_highest(who, score1, running_high)
-    return say      
+
+    return say
     # END PROBLEM 7
 
 
@@ -304,8 +309,10 @@ def always_roll(n):
     >>> strategy(99, 99)
     5
     """
+
     def strategy(score, opponent_score):
         return n
+
     return strategy
 
 
@@ -323,11 +330,13 @@ def make_averaged(original_function, trials_count=1000):
     """
     # BEGIN PROBLEM 8
     "*** YOUR CODE HERE ***"
+
     def inner():
         sum_value = 0
         for i in trials_count:
             sum_value += original_function()
         return sum_value / trials_count
+
     return inner
     # END PROBLEM 8
 
@@ -378,13 +387,12 @@ def run_experiments():
         print('bacon_strategy win rate:', average_win_rate(bacon_strategy))
 
     if False:  # Change to True to test extra_turn_strategy
-        print('extra_turn_strategy win rate:', average_win_rate(extra_turn_strategy))
+        print('extra_turn_strategy win rate:',
+              average_win_rate(extra_turn_strategy))
 
     if False:  # Change to True to test final_strategy
         print('final_strategy win rate:', average_win_rate(final_strategy))
-
     "*** You may add additional experiments as you wish ***"
-
 
 
 def bacon_strategy(score, opponent_score, cutoff=8, num_rolls=6):
@@ -406,7 +414,8 @@ def extra_turn_strategy(score, opponent_score, cutoff=8, num_rolls=6):
     # BEGIN PROBLEM 11
     if extra_turn(score + free_bacon(opponent_score), opponent_score):
         return 0
-    return bacon_strategy(score, opponent_score, cutoff, num_rolls)  # Replace this statement
+    return bacon_strategy(score, opponent_score, cutoff,
+                          num_rolls)  # Replace this statement
     # END PROBLEM 11
 
 
@@ -418,6 +427,7 @@ def final_strategy(score, opponent_score):
     # BEGIN PROBLEM 12
     return 6  # Replace this statement
     # END PROBLEM 12
+
 
 ##########################
 # Command Line Interface #
@@ -432,7 +442,9 @@ def run(*args):
     """Read in the command-line argument and calls corresponding functions."""
     import argparse
     parser = argparse.ArgumentParser(description="Play Hog")
-    parser.add_argument('--run_experiments', '-r', action='store_true',
+    parser.add_argument('--run_experiments',
+                        '-r',
+                        action='store_true',
                         help='Runs strategy experiments')
 
     args = parser.parse_args()
