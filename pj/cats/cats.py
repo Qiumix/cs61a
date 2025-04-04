@@ -4,7 +4,6 @@ from utils import lower, split, remove_punctuation, lines_from_file
 from ucb import main, interact, trace
 from datetime import datetime
 
-
 ###########
 # Phase 1 #
 ###########
@@ -19,7 +18,7 @@ def choose(paragraphs, select, k):
     "*** YOUR CODE HERE ***"
     if k >= len(paragraphs):
         return ""
-    t_str = paragraghs[k]
+    t_str = paragraphs[k]
     if select[t_str]:
         return t_str
     # END PROBLEM 1
@@ -38,7 +37,7 @@ def about(topic):
     assert all([lower(x) == x for x in topic]), 'topics should be lowercase.'
     # BEGIN PROBLEM 2
     "*** YOUR CODE HERE ***"
-    return lambda x :()
+    return lambda x: ()
     # END PROBLEM 2
 
 
@@ -98,18 +97,18 @@ def pawssible_patches(start, goal, limit):
     """A diff function that computes the edit distance from START to GOAL."""
     assert False, 'Remove this line'
 
-    if ______________: # Fill in the condition
+    if ______________:  # Fill in the condition
         # BEGIN
         "*** YOUR CODE HERE ***"
         # END
 
-    elif ___________: # Feel free to remove or add additional cases
+    elif ___________:  # Feel free to remove or add additional cases
         # BEGIN
         "*** YOUR CODE HERE ***"
         # END
 
     else:
-        add_diff = ... # Fill in these lines
+        add_diff = ...  # Fill in these lines
         remove_diff = ...
         substitute_diff = ...
         # BEGIN
@@ -168,8 +167,10 @@ def fastest_words(game):
     Returns:
         a list of lists containing which words each player typed fastest
     """
-    player_indices = range(len(all_times(game)))  # contains an *index* for each player
-    word_indices = range(len(all_words(game)))    # contains an *index* for each word
+    player_indices = range(len(
+        all_times(game)))  # contains an *index* for each player
+    word_indices = range(len(
+        all_words(game)))  # contains an *index* for each word
     # BEGIN PROBLEM 10
     "*** YOUR CODE HERE ***"
     # END PROBLEM 10
@@ -177,10 +178,14 @@ def fastest_words(game):
 
 def game(words, times):
     """A data abstraction containing all words typed and their times."""
-    assert all([type(w) == str for w in words]), 'words should be a list of strings'
-    assert all([type(t) == list for t in times]), 'times should be a list of lists'
-    assert all([isinstance(i, (int, float)) for t in times for i in t]), 'times lists should contain numbers'
-    assert all([len(t) == len(words) for t in times]), 'There should be one word per time.'
+    assert all([type(w) == str
+                for w in words]), 'words should be a list of strings'
+    assert all([type(t) == list
+                for t in times]), 'times should be a list of lists'
+    assert all([isinstance(i, (int, float)) for t in times
+                for i in t]), 'times lists should contain numbers'
+    assert all([len(t) == len(words)
+                for t in times]), 'There should be one word per time.'
     return [words, times]
 
 
@@ -211,6 +216,7 @@ def game_string(game):
     """A helper function that takes in a game object and returns a string representation of it"""
     return "game(%s, %s)" % (game[0], game[1])
 
+
 enable_multiplayer = False  # Change to True when you're ready to race.
 
 ##########################
@@ -231,7 +237,9 @@ def run_typing_test(topics):
             print('No more paragraphs about', topics, 'are available.')
             return
         print('Type the following paragraph and then press enter/return.')
-        print('If you only type part of it, you will be scored only on that part.\n')
+        print(
+            'If you only type part of it, you will be scored only on that part.\n'
+        )
         print(reference)
         print()
 
