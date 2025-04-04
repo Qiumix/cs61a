@@ -170,6 +170,7 @@ def play(strategy0,
             i = 0
             while i == 0 or extra_turn(score0, score1):
                 score0 += take_turn(strategy0(score0, score1), score1, dice)
+                say = say(score0, score1)
                 if score0 >= goal:
                     return score0, score1
                 i += 1
@@ -181,6 +182,7 @@ def play(strategy0,
             i = 0
             while i == 0 or extra_turn(score1, score0):
                 score1 += take_turn(strategy1(score1, score0), score0, dice)
+                say = say(score0, score1)
                 if score1 >= goal:
                     return score0, score1
                 i += 1
