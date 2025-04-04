@@ -275,21 +275,15 @@ def announce_highest(who, last_score=0, running_high=0):
     # BEGIN PROBLEM 7
     "*** YOUR CODE HERE ***"
 
-    def say(score0, score1):
-        if who == 0:
-            inc_cur = score0 - last_score
-            if inc_cur > running_high:
-                running_high = inc_cur
-                print(running_high, " point(s)! The most yet for Player 0")
-            return announce_highest(who, score0, running_high)
-        else:
-            inc_cur = score1 - last_score
-            if inc_cur > running_high:
-                running_high = inc_cur
-                print(running_high, " point(s)! The most yet for Player 1")
-            return announce_highest(who, score1, running_high)
+    def inner(s0, s1, highest=0, last=[0, 0]):
+        inner_list = [s0, s1]
+        temp = inner_list[who] - last[who]
+        if temp > highest:
+            print(f"{temp} point(s)! The most yet for Player {who}")
+            return lambda s0, s1: inner(s0, s1, temp, inner_list)
+        return lambda s0, s1: inner(s0, s1, highest, inner_list)
 
-    return say
+    return inner
     # END PROBLEM 7
 
 
