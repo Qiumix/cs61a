@@ -40,6 +40,14 @@ def about(topic):
     # BEGIN PROBLEM 2
     "*** YOUR CODE HERE ***"
 
+    def inner(Strings):
+        Lists = split(remove_punctuation(lower(Strings)))
+        for i in topic:
+            if i in Lists:
+                return True
+        return False
+
+    return inner
     # END PROBLEM 2
 
 
@@ -64,6 +72,19 @@ def accuracy(typed, reference):
     reference_words = split(reference)
     # BEGIN PROBLEM 3
     "*** YOUR CODE HERE ***"
+    total = len(typed_words)
+    total2 = len(reference_words)
+    iter = min(total, total2)
+    count = 0
+    if iter == 0:
+        if typed == reference:
+            return 100.0
+        return 0.0
+    for i in range(iter):
+        if typed_words[i] == reference_words[i]:
+            count += 1
+    return count * 100 / total
+
     # END PROBLEM 3
 
 
@@ -72,6 +93,8 @@ def wpm(typed, elapsed):
     assert elapsed > 0, 'Elapsed time must be positive'
     # BEGIN PROBLEM 4
     "*** YOUR CODE HERE ***"
+    Minute = 60
+    return len(typed) / 5 / (elapsed / Minute)
     # END PROBLEM 4
 
 
