@@ -2,3 +2,4 @@
 'get_k_run_starter-correct', (512, 70)
 'make_repeater-correct', (1024, 70)
 'apply_twice-correct', (1536, 70)
+'div_by_primes_under-correct', (2048, 70)

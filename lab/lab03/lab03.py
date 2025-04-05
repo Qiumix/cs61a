@@ -183,7 +183,7 @@ def div_by_primes_under_no_lambda(n):
 
                 def inner(x):
 
-                    return x % i or f(i)
+                    return x % i == 0 or f(i)
 
                 return inner
 
