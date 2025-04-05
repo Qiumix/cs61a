@@ -129,7 +129,7 @@ def shifty_shifts(start, goal, limit):
     if start == goal:
         return 0
     elif limit == 0:
-        return 0
+        return max(len(start), len(goal))
     elif start == '' or goal == '':
         return max(len(goal), len(start))
     diff_t = 0 if start[0] == goal[0] else 1
