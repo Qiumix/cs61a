@@ -203,6 +203,7 @@ def time_per_word(times_per_player, words):
     """
     # BEGIN PROBLEM 9
     "*** YOUR CODE HERE ***"
+
     # END PROBLEM 9
 
 
