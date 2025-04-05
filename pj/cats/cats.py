@@ -105,6 +105,18 @@ def autocorrect(user_word, valid_words, diff_function, limit):
     """
     # BEGIN PROBLEM 5
     "*** YOUR CODE HERE ***"
+    if user_word in valid_words:
+        return user_word
+    pos, diff_min = -1, limit + 1
+    length = len(valid_words)
+    for i in range(length):
+        diff_t = diff_function(user_word, valid_words[i], limit)
+        if diff_t < diff_min:
+            diff_min = diff_t
+            pos = i
+    if diff_min > limit:
+        return user_word
+    return valid_words[pos]
     # END PROBLEM 5
 
 
@@ -114,29 +126,39 @@ def shifty_shifts(start, goal, limit):
     their lengths.
     """
     # BEGIN PROBLEM 6
-    assert False, 'Remove this line'
+    if start == goal:
+        return 0
+    elif limit == 0:
+        return 0
+    elif start == '' or goal == '':
+        return max(len(goal), len(start))
+    diff_t = 0 if start[0] == goal[0] else 1
+    return diff_t + shifty_shifts(start[1:], goal[1:], limit - diff_t)
     # END PROBLEM 6
 
 
 def pawssible_patches(start, goal, limit):
     """A diff function that computes the edit distance from START to GOAL."""
-    assert False, 'Remove this line'
 
-    if ______________:  # Fill in the condition
+    if goal == '' or start == '':  # Fill in the condition
         # BEGIN
         "*** YOUR CODE HERE ***"
+        return max(len(goal), len(start))
         # END
-
-    elif ___________:  # Feel free to remove or add additional cases
+    elif start[0] == goal[0]:  # Feel free to remove or add additional cases
         # BEGIN
         "*** YOUR CODE HERE ***"
+        return pawssible_patches(start[1:], goal[1:], limit)
         # END
-
+    elif limit < 0:
+        return 0
     else:
-        add_diff = ...  # Fill in these lines
-        remove_diff = ...
-        substitute_diff = ...
+        add_diff = pawssible_patches(start[1:], goal,
+                                     limit - 1)  # Fill in these lines
+        remove_diff = pawssible_patches(start, goal[1:], limit - 1)
+        substitute_diff = pawssible_patches(start[1:], goal[1:], limit - 1)
         # BEGIN
+        return 1 + min(add_diff, remove_diff, substitute_diff)
         "*** YOUR CODE HERE ***"
         # END
 
